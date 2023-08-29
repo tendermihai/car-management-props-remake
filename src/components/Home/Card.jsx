@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 
-const Card = ({ car }) => {
+const Card = ({ car, page, setId }) => {
 
-    const [show, setShow] = useState("")
+    const handleUpdatePage = (id) => {
+        setId(id)
+        page("update-car")
+    };
 
     return (
 
@@ -44,8 +47,7 @@ const Card = ({ car }) => {
                 <div className="mt-3">
                     <button
                         className="btn btn-primary btn-update"
-                        id="id-${car.id}"
-
+                        id="id-${car.id}" onClick={() => handleUpdatePage(car.id)}
                     >
                         Update
                     </button>

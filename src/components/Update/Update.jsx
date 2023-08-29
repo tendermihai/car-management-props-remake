@@ -1,7 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form"
+import { findCarById, getAllCars, updatePutCar } from "../../services/cars-service";
+import { Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom"
 
+const Update = ({ page, id, setCars }) => {
 
-const Update = () => {
+    const [car, setCar] = useState()
+
+    useEffect(() => {
+        handleGetCarById();
+    }, [id]);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+
+    } = useForm();
+
+    const onSubmit = async (data) => {
+        console.log(data)
+
+        let obj = {
+            Car: {
+                maker: data.maker,
+                model: data.model,
+                year: data.year,
+                price: data.price,
+                color: data.color,
+            },
+        }
+        await updatePutCar(id, obj);
+        setCars(await getAllCars());
+        page("home")
+    }
+
+    let handleGetCarById = async () => {
+        let data = await findCarById(id);
+
+        setCar(data[0]);
+    }
+
+    const handleCancel = () => {
+        page("home");
+    }
 
     return (
         <>

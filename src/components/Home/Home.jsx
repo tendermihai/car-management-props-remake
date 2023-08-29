@@ -2,20 +2,24 @@ import React from "react";
 import Card from "./Card"
 import { Spinner } from "react-bootstrap";
 
-const Home = ({ cars, page }) => {
+const Home = ({ cars, page, setId }) => {
 
-
-
-    const handlePage = () => {
-
-
-
+    const handleAddPage = () => {
         page("new-car");
     }
+
+    const handleUpdatePage = () => {
+        page('update-car')
+    }
+
+
+
+
+
     return (
         <>
             <h1>Car Management</h1>
-            <button className="addBtn" onClick={handlePage}>
+            <button className="addBtn" onClick={handleAddPage}>
                 Add a new car
             </button >
             <select name="sort" className="sort">
@@ -27,7 +31,7 @@ const Home = ({ cars, page }) => {
             <div className="container-cards">
                 {cars.length > 0 ? (
                     cars.map((item) => {
-                        return <Card car={item} />;
+                        return <Card car={item} page={handleUpdatePage} setId={setId} />;
                     })
                 ) : (
                     <Spinner animation="border" role="status">
